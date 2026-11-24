@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ApplicationIcon>Assets/logo.ico</ApplicationIcon>
+    <AssemblyName>SchoolLearn</AssemblyName>
+    <RootNamespace>SchoolLearn</RootNamespace>
+    <StartupObject>SchoolLearn.Program</StartupObject>
+    <ApplicationDefaultFont>Comic Sans MS, 10pt</ApplicationDefaultFont>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector" Version="2.6.1" />
+    <Content Include="Assets/**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Form1.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Form1.Designer.cs"><DependentUpon>Form1.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="Form1.resx"><DependentUpon>Form1.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="Forms\AdminLoginForm.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms\AdminLoginForm.Designer.cs"><DependentUpon>AdminLoginForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="Forms\AdminLoginForm.resx"><DependentUpon>AdminLoginForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="Forms\ServiceEditForm.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms\ServiceEditForm.Designer.cs"><DependentUpon>ServiceEditForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="Forms\ServiceEditForm.resx"><DependentUpon>ServiceEditForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="Forms\ClientServiceForm.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms\ClientServiceForm.Designer.cs"><DependentUpon>ClientServiceForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="Forms\ClientServiceForm.resx"><DependentUpon>ClientServiceForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="Forms\UpcomingServicesForm.cs"><SubType>Form</SubType></Compile>
+    <Compile Update="Forms\UpcomingServicesForm.Designer.cs"><DependentUpon>UpcomingServicesForm.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="Forms\UpcomingServicesForm.resx"><DependentUpon>UpcomingServicesForm.cs</DependentUpon></EmbeddedResource>
+    <Compile Update="Controls\ServiceCardControl.cs"><SubType>UserControl</SubType></Compile>
+    <Compile Update="Controls\ServiceCardControl.Designer.cs"><DependentUpon>ServiceCardControl.cs</DependentUpon></Compile>
+    <EmbeddedResource Update="Controls\ServiceCardControl.resx"><DependentUpon>ServiceCardControl.cs</DependentUpon></EmbeddedResource>
+  </ItemGroup>
+</Project>

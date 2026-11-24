@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>../../resources/icon.ico</ApplicationIcon>
+    <AssemblyName>KushayVkusno</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MySqlConnector" Version="2.6.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="../../resources/Images/*.jpg" Link="Images/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../resources/Images/*.png" Link="Images/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../resources/logo.png" Link="logo.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../resources/picture.png" Link="picture.png" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../resources/icon.ico" Link="app.ico" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="*.resx"><DependentUpon>%(Filename).cs</DependentUpon></EmbeddedResource>
+  </ItemGroup>
+</Project>

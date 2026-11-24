@@ -1,0 +1,48 @@
+CREATE DATABASE IF NOT EXISTS `isp-44_ilchenko_dm_tours7` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `isp-44_ilchenko_dm_tours7`;
+SET FOREIGN_KEY_CHECKS = 0;
+
+CREATE TABLE IF NOT EXISTS `Country` (
+  `Code` CHAR(2) CHARACTER SET 'utf8mb4' NOT NULL,
+  `Name` VARCHAR(100) CHARACTER SET 'utf8mb4' NOT NULL,
+  PRIMARY KEY (`Code`));
+
+CREATE TABLE IF NOT EXISTS `Tour` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `TicketCount` INT NOT NULL,
+  `Name` VARCHAR(100) CHARACTER SET 'utf8mb4' NOT NULL,
+  `Description` LONGTEXT CHARACTER SET 'utf8mb4' NULL DEFAULT NULL,
+  `ImagePreview` LONGBLOB NULL DEFAULT NULL,
+  `Price` DECIMAL(19,4) NOT NULL,
+  `IsActual` TINYINT(1) NOT NULL,
+  `Country_Code` CHAR(2) CHARACTER SET 'utf8mb4' NOT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `fk_Tour_Country1_idx` (`Country_Code` ASC),
+  CONSTRAINT `fk_Tour_Country1`
+    FOREIGN KEY (`Country_Code`)
+    REFERENCES `Country` (`Code`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `Type` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(100) CHARACTER SET 'utf8mb4' NOT NULL,
+  PRIMARY KEY (`Id`));
+
+CREATE TABLE IF NOT EXISTS `TypeOfTour` (
+  `TourId` INT NOT NULL,
+  `TypeId` INT NOT NULL,
+  PRIMARY KEY (`TourId`, `TypeId`),
+  INDEX `FK_TypeOfTour_Type` (`TypeId` ASC),
+  CONSTRAINT `FK_TypeOfTour_Tour`
+    FOREIGN KEY (`TourId`)
+    REFERENCES `Tour` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_TypeOfTour_Type`
+    FOREIGN KEY (`TypeId`)
+    REFERENCES `Type` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+SET FOREIGN_KEY_CHECKS = 1;

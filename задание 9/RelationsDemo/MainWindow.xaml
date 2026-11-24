@@ -1,0 +1,101 @@
+<Window x:Class="RelationsDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:RelationsDemo.Converters"
+        Title="Практическая работа — связи Entity Framework Core"
+        Width="1120" Height="760" MinWidth="800" MinHeight="520" Language="ru-RU">
+    <Window.Resources>
+        <converters:TourImageConverter x:Key="TourImage" />
+        <Style TargetType="DataGrid">
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="CanUserAddRows" Value="False" />
+            <Setter Property="CanUserDeleteRows" Value="False" />
+            <Setter Property="ColumnWidth" Value="*" />
+        </Style>
+        <DataTemplate x:Key="TourTemplate">
+            <Border BorderBrush="Gray" BorderThickness="1" Margin="3" Padding="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="{Binding ImagePreview, Converter={StaticResource TourImage}}"
+                           Width="120" Height="90" Stretch="Uniform" />
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding Price, StringFormat={}{0:N2} РУБ}" />
+                        <TextBlock Text="{Binding TicketCount, StringFormat=Билетов: {0}}" />
+                        <TextBlock Text="{Binding StatusText}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="IncludeTemplate">
+            <StackPanel>
+                <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource TourTemplate}" />
+                <TextBlock Text="{Binding Country.Name, StringFormat=Страна: {0}}" Margin="150,0,8,8" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ThenIncludeTemplate">
+            <StackPanel>
+                <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource TourTemplate}" />
+                <TextBlock Text="{Binding TypeNames, StringFormat=Типы: {0}}" TextWrapping="Wrap" Margin="150,0,8,8" />
+            </StackPanel>
+        </DataTemplate>
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+    </Window.Resources>
+    <DockPanel Margin="12">
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="ReloadButton" Content="Обновить данные" Click="ReloadClick" Padding="12,5" />
+            <TextBlock x:Name="StatusLabel" Margin="12,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" />
+        </StackPanel>
+        <TabControl x:Name="Examples">
+            <TabItem Header="DataGrid · таблица">
+                <DataGrid x:Name="SingleGrid">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="55" />
+                        <DataGridTextColumn Header="Тур" Binding="{Binding Name}" Width="3*" />
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Price, StringFormat=N2}" />
+                        <DataGridTextColumn Header="Билетов" Binding="{Binding TicketCount}" />
+                        <DataGridTextColumn Header="Статус" Binding="{Binding StatusText}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="DataGrid · Include">
+                <DataGrid x:Name="IncludeGrid">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Тур" Binding="{Binding Name}" Width="2*" />
+                        <DataGridTextColumn Header="Country.Name" Binding="{Binding Country.Name}" Width="2*" />
+                        <DataGridTextColumn Header="Стоимость" Binding="{Binding Price, StringFormat=N2}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="DataGrid · ThenInclude">
+                <DataGrid x:Name="ThenIncludeGrid">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Тур" Binding="{Binding Name}" Width="2*" />
+                        <DataGridTextColumn Header="Типы тура (строка)" Binding="{Binding TypeNames}" Width="4*">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="ListView · таблица">
+                <ListView x:Name="SingleList" ItemTemplate="{StaticResource TourTemplate}" />
+            </TabItem>
+            <TabItem Header="ListView · Include">
+                <ListView x:Name="IncludeList" ItemTemplate="{StaticResource IncludeTemplate}" />
+            </TabItem>
+            <TabItem Header="ListView · ThenInclude">
+                <ListView x:Name="ThenIncludeList" ItemTemplate="{StaticResource ThenIncludeTemplate}" />
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
